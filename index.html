@@ -196,6 +196,22 @@
                         <p id="loading-text" data-translate="loading_text" class="mt-4 text-slate-600">Our magical storyteller is writing your tale...</p>
                     </div>
                     <div id="storyContent" class="text-slate-700 leading-relaxed prose lg:prose-xl"></div>
+                    
+                    <!-- NEW ILLUSTRATION SECTION -->
+                    <div id="illustrationSection" class="hidden mt-8 text-center border-t pt-8">
+                        <button id="illustrateStoryBtn" data-translate="illustrate_button" class="bg-cyan-500 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-cyan-600 transition duration-300 shadow-lg transform hover:scale-105">
+                            ✨ Illustrate Story
+                        </button>
+                        <div id="imageLoadingIndicator" class="hidden mt-4">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
+                            <p data-translate="loading_image_text" class="mt-2 text-slate-600">The AI is painting your picture...</p>
+                        </div>
+                        <div id="illustrationResult" class="mt-6">
+                            <img id="generatedImage" class="hidden rounded-lg shadow-md mx-auto" alt="AI-generated illustration">
+                        </div>
+                        <div id="imageErrorMessage" class="hidden text-red-500 font-semibold text-center mt-4"></div>
+                    </div>
+                    
                     <div id="errorMessage" class="hidden text-red-500 font-semibold text-center"></div>
                 </div>
             </div>
@@ -338,9 +354,12 @@
                 form_theme_placeholder: "e.g., the importance of kindness",
                 form_button: "✨ Generate My Story",
                 loading_text: "Our magical storyteller is writing your tale...",
+                illustrate_button: "✨ Illustrate Story",
+                loading_image_text: "The AI is painting your picture...",
                 error_fill_fields: "Please fill out all fields to create a magical story!",
                 error_generic: "Oops! Something went wrong. Please try again.",
                 error_safety: "The story could not be generated due to our safety settings. Please try adjusting your inputs.",
+                error_image_generic: "Sorry, the illustration could not be created. Please try again.",
                 // Pricing
                 pricing_title: "A Priceless Gift",
                 pricing_subtitle: "Choose the perfect format for your personalized keepsake.",
@@ -423,9 +442,12 @@
                 form_theme_placeholder: "np. o tym, jak ważna jest życzliwość",
                 form_button: "✨ Wygeneruj Moją Historię",
                 loading_text: "Nasz magiczny bajkopisarz tworzy Twoją opowieść...",
+                illustrate_button: "✨ Zilustruj Historię",
+                loading_image_text: "AI maluje Twój obrazek...",
                 error_fill_fields: "Proszę wypełnić wszystkie pola, aby stworzyć magiczną historię!",
                 error_generic: "Ups! Coś poszło nie tak. Proszę, spróbuj ponownie.",
                 error_safety: "Historia nie mogła zostać wygenerowana ze względu na nasze ustawienia bezpieczeństwa. Spróbuj dostosować swoje dane.",
+                error_image_generic: "Niestety, nie udało się stworzyć ilustracji. Spróbuj ponownie.",
                 // Pricing
                 pricing_title: "Bezcenny Prezent",
                 pricing_subtitle: "Wybierz idealny format dla swojej spersonalizowanej pamiątki.",
@@ -495,8 +517,15 @@
         const storyContent = document.getElementById('storyContent');
         const loadingIndicator = document.getElementById('loadingIndicator');
         const errorMessage = document.getElementById('errorMessage');
+        
+        const illustrationSection = document.getElementById('illustrationSection');
+        const illustrateStoryBtn = document.getElementById('illustrateStoryBtn');
+        const imageLoadingIndicator = document.getElementById('imageLoadingIndicator');
+        const generatedImage = document.getElementById('generatedImage');
+        const imageErrorMessage = document.getElementById('imageErrorMessage');
 
         generateStoryBtn.addEventListener('click', generateStory);
+        illustrateStoryBtn.addEventListener('click', illustrateStory);
 
         function setUIState(isLoading, errorKey = null) {
             loadingIndicator.classList.toggle('hidden', !isLoading);
@@ -516,6 +545,20 @@
                  storyContent.classList.remove('hidden');
             }
         }
+        
+        function setImageUIState(isLoading, errorKey = null) {
+            imageLoadingIndicator.classList.toggle('hidden', !isLoading);
+            illustrateStoryBtn.disabled = isLoading;
+            illustrateStoryBtn.classList.toggle('opacity-50', isLoading);
+            illustrateStoryBtn.classList.toggle('cursor-not-allowed', isLoading);
+
+            if(errorKey) {
+                imageErrorMessage.textContent = translations[currentLang][errorKey] || translations['en'][errorKey];
+                imageErrorMessage.classList.remove('hidden');
+            } else {
+                imageErrorMessage.classList.add('hidden');
+            }
+        }
 
         async function generateStory() {
             const childName = document.getElementById('childName').value.trim();
@@ -532,6 +575,9 @@
 
             storyResultContainer.classList.remove('hidden');
             storyContent.innerHTML = '';
+            illustrationSection.classList.add('hidden');
+            generatedImage.classList.add('hidden');
+            generatedImage.src = '';
             setUIState(true);
 
             const systemPrompt = translations[currentLang].gemini_system_prompt;
@@ -542,17 +588,37 @@
                 .replace('${specialObject}', specialObject)
                 .replace('${theme}', theme);
 
-
             try {
                 const generatedText = await callGeminiWithBackoff(userQuery, systemPrompt);
                 
                 const formattedText = generatedText.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
                 storyContent.innerHTML = formattedText;
+                illustrationSection.classList.remove('hidden');
                 setUIState(false);
 
             } catch (error) {
                 console.error('Error generating story:', error);
                 setUIState(false, error.message.includes('safety') ? 'error_safety' : 'error_generic');
+            }
+        }
+        
+        async function illustrateStory() {
+            const storyText = storyContent.innerText;
+            if(!storyText) return;
+
+            setImageUIState(true);
+            generatedImage.classList.add('hidden');
+
+            const prompt = `A beautiful, whimsical illustration for a storybook, in the style of a children's book. The scene is: ${storyText}`;
+
+            try {
+                const base64Data = await callImagenApi(prompt);
+                generatedImage.src = `data:image/png;base64,${base64Data}`;
+                generatedImage.classList.remove('hidden');
+                setImageUIState(false);
+            } catch (error) {
+                console.error('Error generating image:', error);
+                setImageUIState(false, 'error_image_generic');
             }
         }
 
@@ -575,19 +641,16 @@
                         body: JSON.stringify(payload)
                     });
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                     const result = await response.json();
                     const candidate = result.candidates?.[0];
 
-                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                    if (candidate?.content?.parts?.[0]?.text) {
                         return candidate.content.parts[0].text;
                     } else {
-                        const finishReason = candidate?.finishReason;
-                        if (finishReason === 'SAFETY') {
-                             throw new Error("The story could not be generated due to our safety settings. Please try adjusting your inputs.");
+                        if (candidate?.finishReason === 'SAFETY') {
+                             throw new Error("safety");
                         }
                         throw new Error('No content found in API response.');
                     }
@@ -598,6 +661,41 @@
                 }
             }
         }
+        
+        async function callImagenApi(prompt, retries = 3, delay = 1000) {
+            const apiKey = "AIzaSyCAkPvO-oefn7Dp-FMxwAXYxW3ebhg2gRI";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+            
+            const payload = { 
+                instances: [{ "prompt": prompt }],
+                parameters: { "sampleCount": 1 }
+            };
+
+            for (let i = 0; i < retries; i++) {
+                 try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const result = await response.json();
+                    
+                    if (result.predictions?.[0]?.bytesBase64Encoded) {
+                        return result.predictions[0].bytesBase64Encoded;
+                    } else {
+                        throw new Error('No image data found in API response.');
+                    }
+                } catch (error) {
+                    console.error(`Image generation attempt ${i + 1} failed:`, error);
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+                }
+            }
+        }
+
 
         // Initialize the page with the default language
         setLanguage(currentLang);
@@ -605,5 +703,4 @@
 
 </body>
 </html>
-
 
