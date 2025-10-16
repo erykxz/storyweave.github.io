@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoryWeave - Personalized Books for Your Loved Ones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font for the brand name */
+        .font-brand {
+            font-family: 'Pacifico', cursive;
+        }
+        /* Custom font for body text */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Simple animation for hero section */
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Styles for generated content */
+        .prose p {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-brand text-cyan-600">StoryWeave</a>
+            <div class="flex items-center">
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#how-it-works" class="text-slate-600 hover:text-cyan-600 transition duration-300" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="#stories" class="text-slate-600 hover:text-cyan-600 transition duration-300" data-translate="nav_stories">Stories</a>
+                    <a href="#pricing" class="text-slate-600 hover:text-cyan-600 transition duration-300" data-translate="nav_pricing">Pricing</a>
+                    <a href="#ai-story-generator" class="bg-cyan-500 text-white px-5 py-2 rounded-full hover:bg-cyan-600 transition duration-300 shadow-md" data-translate="nav_create_with_ai">✨ Create with AI</a>
+                </nav>
+                <button id="lang-toggle" class="ml-6 border border-slate-300 text-slate-600 font-semibold px-3 py-1 rounded-full text-sm hover:bg-slate-100 transition">PL</button>
+                <button class="md:hidden text-slate-600 ml-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-cyan-50 pt-32 pb-20 md:pt-40 md:pb-28">
+            <div class="container mx-auto px-6 text-center">
+                <h1 data-translate="hero_title" class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight fade-in-up">Your Loved One, The <span class="text-cyan-600">Hero</span> of Their Own Story</h1>
+                <p data-translate="hero_subtitle" class="mt-6 max-w-2xl mx-auto text-lg text-slate-600 fade-in-up" style="animation-delay: 0.2s;">Create one-of-a-kind, professionally printed storybooks where your loved one is the main character. A magical gift that lasts a lifetime.</p>
+                <a href="#ai-story-generator" data-translate="hero_button" class="mt-10 inline-block bg-amber-400 text-slate-900 font-bold px-8 py-4 rounded-full text-lg hover:bg-amber-500 transition duration-300 shadow-xl transform hover:scale-105 fade-in-up" style="animation-delay: 0.4s;">
+                    Start Creating with AI
+                </a>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 data-translate="how_it_works_title" class="text-3xl md:text-4xl font-bold text-slate-900">Create Magic in 4 Simple Steps</h2>
+                    <p data-translate="how_it_works_subtitle" class="mt-4 text-slate-600 max-w-xl mx-auto">From screen to storytime in just a few clicks. It's that easy!</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="bg-cyan-100 text-cyan-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                           <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.572L16.5 21.75l-.398-1.178a3.375 3.375 0 00-2.455-2.456L12.75 18l1.178-.398a3.375 3.375 0 002.455-2.456L16.5 14.25l.398 1.178a3.375 3.375 0 002.456 2.456L20.25 18l-1.178.398a3.375 3.375 0 00-2.456 2.456z" />
+                            </svg>
+                        </div>
+                        <h3 data-translate="step1_title" class="text-xl font-bold mb-2">1. Use the AI Writer</h3>
+                        <p data-translate="step1_desc" class="text-slate-600">Provide a few details to our AI to generate a unique story.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="bg-amber-100 text-amber-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                        </div>
+                        <h3 data-translate="step2_title" class="text-xl font-bold mb-2">2. Personalize</h3>
+                        <p data-translate="step2_desc" class="text-slate-600">Add their name, create a character, and write a special dedication.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                         <div class="bg-violet-100 text-violet-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                        <h3 data-translate="step3_title" class="text-xl font-bold mb-2">3. Preview Instantly</h3>
+                        <p data-translate="step3_desc" class="text-slate-600">See your complete, personalized book before you order.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                         <div class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.94 12.06a9 9 0 10-1.94 5.94"></path></svg>
+                        </div>
+                        <h3 data-translate="step4_title" class="text-xl font-bold mb-2">4. Print & Ship</h3>
+                        <p data-translate="step4_desc" class="text-slate-600">We print and deliver a beautiful keepsake to your door.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Themes Section -->
+        <section id="stories" class="bg-white py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 data-translate="stories_title" class="text-3xl md:text-4xl font-bold text-slate-900">...Or Choose a Classic Adventure</h2>
+                    <p data-translate="stories_subtitle" class="mt-4 text-slate-600 max-w-xl mx-auto">Each pre-written story is crafted by talented authors and illustrators.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Story 1 -->
+                    <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg group">
+                        <img src="https://placehold.co/600x400/34d399/ffffff?text=Space+Adventure" alt="Space Adventure Storybook" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="p-6">
+                            <h3 data-translate="story1_title" class="text-2xl font-bold text-slate-900">The Great Space Adventure</h3>
+                            <p data-translate="story1_desc" class="mt-2 text-slate-600">Journey through the stars and discover new planets with your brave astronaut.</p>
+                            <a href="#" data-translate="story_button" class="mt-4 inline-block text-cyan-600 font-semibold hover:text-cyan-700">Personalize this story &rarr;</a>
+                        </div>
+                    </div>
+                     <!-- Story 2 -->
+                    <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg group">
+                        <img src="https://placehold.co/600x400/fbbf24/ffffff?text=Magical+Forest" alt="Magical Forest Storybook" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="p-6">
+                            <h3 data-translate="story2_title" class="text-2xl font-bold text-slate-900">The Magical Forest Quest</h3>
+                            <p data-translate="story2_desc" class="mt-2 text-slate-600">Help woodland creatures solve a mystery in an enchanted forest that changes with the seasons.</p>
+                             <a href="#" data-translate="story_button" class="mt-4 inline-block text-cyan-600 font-semibold hover:text-cyan-700">Personalize this story &rarr;</a>
+                        </div>
+                    </div>
+                     <!-- Story 3 -->
+                    <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg group">
+                        <img src="https://placehold.co/600x400/818cf8/ffffff?text=Underwater+Secret" alt="Underwater Secret Storybook" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="p-6">
+                            <h3 data-translate="story3_title" class="text-2xl font-bold text-slate-900">Secret of the Deep Blue</h3>
+                            <p data-translate="story3_desc" class="mt-2 text-slate-600">Dive deep into the ocean to meet friendly dolphins and uncover a legendary pirate treasure.</p>
+                             <a href="#" data-translate="story_button" class="mt-4 inline-block text-cyan-600 font-semibold hover:text-cyan-700">Personalize this story &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Story Generator Section -->
+        <section id="ai-story-generator" class="py-20 bg-cyan-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 data-translate="ai_title" class="text-3xl md:text-4xl font-bold text-slate-900">✨ Create a Unique Story with AI</h2>
+                    <p data-translate="ai_subtitle" class="mt-4 text-slate-600 max-w-2xl mx-auto">Can't find the perfect adventure? Let our AI storyteller craft a one-of-a-kind tale for someone special!</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="childName" class="font-semibold text-slate-700" data-translate="form_name_label">Main character's name:</label>
+                            <input type="text" id="childName" data-translate-placeholder="form_name_placeholder" placeholder="e.g., Lily" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="friendName" class="font-semibold text-slate-700" data-translate="form_friend_label">A friend or pet's name:</label>
+                            <input type="text" id="friendName" data-translate-placeholder="form_friend_placeholder" placeholder="e.g., Squeaky the squirrel" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="location" class="font-semibold text-slate-700" data-translate="form_location_label">A magical place:</label>
+                            <input type="text" id="location" data-translate-placeholder="form_location_placeholder" placeholder="e.g., The Whispering Woods" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="specialObject" class="font-semibold text-slate-700" data-translate="form_object_label">A special object:</label>
+                            <input type="text" id="specialObject" data-translate-placeholder="form_object_placeholder" placeholder="e.g., a glowing, singing flower" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="theme" class="font-semibold text-slate-700" data-translate="form_theme_label">What should the story be about?</label>
+                            <input type="text" id="theme" data-translate-placeholder="form_theme_placeholder" placeholder="e.g., the importance of kindness" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                    </div>
+                    <div class="text-center mt-8">
+                        <button id="generateStoryBtn" data-translate="form_button" class="bg-amber-400 text-slate-900 font-bold px-8 py-4 rounded-full text-lg hover:bg-amber-500 transition duration-300 shadow-lg transform hover:scale-105">
+                            ✨ Generate My Story
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="storyResult" class="hidden mt-12 max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-lg border-2 border-dashed border-cyan-200">
+                    <div id="loadingIndicator" class="hidden text-center">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
+                        <p id="loading-text" data-translate="loading_text" class="mt-4 text-slate-600">Our magical storyteller is writing your tale...</p>
+                    </div>
+                    <div id="storyContent" class="text-slate-700 leading-relaxed prose lg:prose-xl"></div>
+                    <div id="errorMessage" class="hidden text-red-500 font-semibold text-center"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 data-translate="pricing_title" class="text-3xl md:text-4xl font-bold text-slate-900">A Priceless Gift</h2>
+                    <p data-translate="pricing_subtitle" class="mt-4 text-slate-600 max-w-xl mx-auto">Choose the perfect format for your personalized keepsake.</p>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <!-- Pricing Plan 1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                        <h3 data-translate="plan1_title" class="text-2xl font-bold text-center">Digital eBook</h3>
+                        <p class="text-center text-4xl font-extrabold my-4">$14.99</p>
+                        <ul class="space-y-3 text-slate-600">
+                            <li class="flex items-center" data-translate="plan1_feature1"><span class="text-emerald-500 mr-2">&#10003;</span> Instant PDF download</li>
+                            <li class="flex items-center" data-translate="plan1_feature2"><span class="text-emerald-500 mr-2">&#10003;</span> Read on any device</li>
+                            <li class="flex items-center" data-translate="plan1_feature3"><span class="text-emerald-500 mr-2">&#10003;</span> Perfect for sharing</li>
+                        </ul>
+                        <button data-translate="plan_button" class="w-full mt-6 bg-slate-200 text-slate-700 font-bold py-3 rounded-lg hover:bg-slate-300 transition duration-300">Select Plan</button>
+                    </div>
+                    <!-- Pricing Plan 2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-2xl border-2 border-cyan-500 relative">
+                        <span class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-cyan-500 text-white text-sm font-bold px-4 py-1 rounded-full" data-translate="popular_badge">MOST POPULAR</span>
+                        <h3 data-translate="plan2_title" class="text-2xl font-bold text-center">Softcover Book</h3>
+                        <p class="text-center text-4xl font-extrabold my-4">$29.99</p>
+                        <ul class="space-y-3 text-slate-600">
+                             <li class="flex items-center" data-translate="plan2_feature1"><span class="text-emerald-500 mr-2">&#10003;</span> Vibrant, high-quality print</li>
+                             <li class="flex items-center" data-translate="plan2_feature2"><span class="text-emerald-500 mr-2">&#10003;</span> Durable, beautifully printed cover</li>
+                             <li class="flex items-center" data-translate="plan2_feature3"><span class="text-emerald-500 mr-2">&#10003;</span> Free standard shipping</li>
+                        </ul>
+                         <button data-translate="plan_button" class="w-full mt-6 bg-cyan-500 text-white font-bold py-3 rounded-lg hover:bg-cyan-600 transition duration-300">Select Plan</button>
+                    </div>
+                    <!-- Pricing Plan 3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                        <h3 data-translate="plan3_title" class="text-2xl font-bold text-center">Hardcover Book</h3>
+                        <p class="text-center text-4xl font-extrabold my-4">$39.99</p>
+                        <ul class="space-y-3 text-slate-600">
+                            <li class="flex items-center" data-translate="plan3_feature1"><span class="text-emerald-500 mr-2">&#10003;</span> Premium, lasting keepsake</li>
+                            <li class="flex items-center" data-translate="plan3_feature2"><span class="text-emerald-500 mr-2">&#10003;</span> Glossy, resilient cover</li>
+                            <li class="flex items-center" data-translate="plan3_feature3"><span class="text-emerald-500 mr-2">&#10003;</span> Free standard shipping</li>
+                        </ul>
+                         <button data-translate="plan_button" class="w-full mt-6 bg-slate-200 text-slate-700 font-bold py-3 rounded-lg hover:bg-slate-300 transition duration-300">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Final CTA Section -->
+        <section id="contact" class="bg-cyan-500 text-white">
+            <div class="container mx-auto px-6 py-20 text-center">
+                <h2 data-translate="cta_title" class="text-3xl md:text-4xl font-bold">Ready to Create a Story?</h2>
+                <p data-translate="cta_subtitle" class="mt-4 max-w-xl mx-auto text-cyan-100">Give a gift that sparks imagination and builds memories. Start your book today and see their face light up.</p>
+                <a href="#ai-story-generator" data-translate="cta_button" class="mt-8 inline-block bg-white text-cyan-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-cyan-50 transition duration-300 shadow-xl transform hover:scale-105">
+                    Create the Perfect Story
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-300">
+        <div class="container mx-auto px-6 py-10">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-brand text-cyan-400">StoryWeave</h3>
+                    <p data-translate="footer_desc" class="mt-2 text-slate-400">Weaving imagination into reality, one story at a time.</p>
+                </div>
+                <div>
+                    <h4 data-translate="footer_links_title" class="text-lg font-semibold text-white">Quick Links</h4>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="hover:text-cyan-400" data-translate="footer_link_home">Home</a></li>
+                        <li><a href="#how-it-works" class="hover:text-cyan-400" data-translate="footer_link_how">How It Works</a></li>
+                        <li><a href="#stories" class="hover:text-cyan-400" data-translate="footer_link_stories">Stories</a></li>
+                        <li><a href="#pricing" class="hover:text-cyan-400" data-translate="footer_link_pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 data-translate="footer_contact_title" class="text-lg font-semibold text-white">Contact Us</h4>
+                    <ul class="mt-4 space-y-2 text-slate-400">
+                        <li data-translate="footer_contact_email">Email: hello@storyweave.com</li>
+                        <li data-translate="footer_contact_phone">Phone: (123) 456-7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-700 text-center text-slate-500 text-sm">
+                <p data-translate="footer_copyright">&copy; 2025 StoryWeave. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                // Nav
+                nav_how_it_works: "How It Works",
+                nav_stories: "Stories",
+                nav_pricing: "Pricing",
+                nav_create_with_ai: "✨ Create with AI",
+                // Hero
+                hero_title: 'Your Loved One, The <span class="text-cyan-600">Hero</span> of Their Own Story',
+                hero_subtitle: 'Create one-of-a-kind, professionally printed storybooks where your loved one is the main character. A magical gift that lasts a lifetime.',
+                hero_button: 'Start Creating with AI',
+                // How it works
+                how_it_works_title: "Create Magic in 4 Simple Steps",
+                how_it_works_subtitle: "From screen to storytime in just a few clicks. It's that easy!",
+                step1_title: "1. Use the AI Writer",
+                step1_desc: "Provide a few details to our AI to generate a unique story.",
+                step2_title: "2. Personalize",
+                step2_desc: "Add their name, create a character, and write a special dedication.",
+                step3_title: "3. Preview Instantly",
+                step3_desc: "See your complete, personalized book before you order.",
+                step4_title: "4. Print & Ship",
+                step4_desc: "We print and deliver a beautiful keepsake to your door.",
+                // Stories
+                stories_title: "...Or Choose a Classic Adventure",
+                stories_subtitle: "Each pre-written story is crafted by talented authors and illustrators.",
+                story1_title: "The Great Space Adventure",
+                story1_desc: "Journey through the stars and discover new planets with your brave astronaut.",
+                story2_title: "The Magical Forest Quest",
+                story2_desc: "Help woodland creatures solve a mystery in an enchanted forest that changes with the seasons.",
+                story3_title: "Secret of the Deep Blue",
+                story3_desc: "Dive deep into the ocean to meet friendly dolphins and uncover a legendary pirate treasure.",
+                story_button: "Personalize this story &rarr;",
+                // AI Generator
+                ai_title: "✨ Create a Unique Story with AI",
+                ai_subtitle: "Can't find the perfect adventure? Let our AI storyteller craft a one-of-a-kind tale for someone special!",
+                form_name_label: "Main character's name:",
+                form_name_placeholder: "e.g., Lily",
+                form_friend_label: "A friend or pet's name:",
+                form_friend_placeholder: "e.g., Squeaky the squirrel",
+                form_location_label: "A magical place:",
+                form_location_placeholder: "e.g., The Whispering Woods",
+                form_object_label: "A special object:",
+                form_object_placeholder: "e.g., a glowing, singing flower",
+                form_theme_label: "What should the story be about?",
+                form_theme_placeholder: "e.g., the importance of kindness",
+                form_button: "✨ Generate My Story",
+                loading_text: "Our magical storyteller is writing your tale...",
+                error_fill_fields: "Please fill out all fields to create a magical story!",
+                error_generic: "Oops! Something went wrong. Please try again.",
+                error_safety: "The story could not be generated due to our safety settings. Please try adjusting your inputs.",
+                // Pricing
+                pricing_title: "A Priceless Gift",
+                pricing_subtitle: "Choose the perfect format for your personalized keepsake.",
+                plan1_title: "Digital eBook",
+                plan1_feature1: "Instant PDF download",
+                plan1_feature2: "Read on any device",
+                plan1_feature3: "Perfect for sharing",
+                popular_badge: "MOST POPULAR",
+                plan2_title: "Softcover Book",
+                plan2_feature1: "Vibrant, high-quality print",
+                plan2_feature2: "Durable, beautifully printed cover",
+                plan2_feature3: "Free standard shipping",
+                plan3_title: "Hardcover Book",
+                plan3_feature1: "Premium, lasting keepsake",
+                plan3_feature2: "Glossy, resilient cover",
+                plan3_feature3: "Free standard shipping",
+                plan_button: "Select Plan",
+                // CTA
+                cta_title: "Ready to Create a Story?",
+                cta_subtitle: "Give a gift that sparks imagination and builds memories. Start your book today and see their face light up.",
+                cta_button: "Create the Perfect Story",
+                // Footer
+                footer_desc: "Weaving imagination into reality, one story at a time.",
+                footer_links_title: "Quick Links",
+                footer_link_home: "Home",
+                footer_link_how: "How It Works",
+                footer_link_stories: "Stories",
+                footer_link_pricing: "Pricing",
+                footer_contact_title: "Contact Us",
+                footer_contact_email: "Email: hello@storyweave.com",
+                footer_contact_phone: "Phone: (123) 456-7890",
+                footer_copyright: "&copy; 2025 StoryWeave. All Rights Reserved.",
+                 // Gemini Prompts
+                gemini_system_prompt: "You are a world-class author of enchanting and heartwarming stories for all ages. Your stories are magical, uplifting, and always carry a gentle, positive message. Write a short, meaningful story based on the user's input.",
+                gemini_user_prompt: "Write a magical story about a person named ${childName} and their friend, ${friendName}. The adventure takes place in ${location} and involves a special object: ${specialObject}. The story should be about ${theme}."
+            },
+            pl: {
+                 // Nav
+                nav_how_it_works: "Jak to działa",
+                nav_stories: "Bajki",
+                nav_pricing: "Cennik",
+                nav_create_with_ai: "✨ Stwórz z AI",
+                // Hero
+                hero_title: 'Twoja Bliska Osoba, <span class="text-cyan-600">Bohaterem</span> Własnej Historii',
+                hero_subtitle: 'Twórz jedyne w swoim rodzaju, profesjonalnie drukowane książki, w których Twoja bliska osoba jest głównym bohaterem. Magiczny prezent na całe życie.',
+                hero_button: 'Zacznij Tworzyć z AI',
+                // How it works
+                how_it_works_title: "Stwórz Magię w 4 Prostych Krokach",
+                how_it_works_subtitle: "Od ekranu do wspólnego czytania w kilka kliknięć. To takie proste!",
+                step1_title: "1. Użyj Pisarza AI",
+                step1_desc: "Podaj kilka szczegółów, a nasza AI wygeneruje unikalną historię.",
+                step2_title: "2. Spersonalizuj",
+                step2_desc: "Dodaj imię, stwórz postać i napisz specjalną dedykację.",
+                step3_title: "3. Zobacz Podgląd",
+                step3_desc: "Zobacz całą, spersonalizowaną książkę, zanim złożysz zamówienie.",
+                step4_title: "4. Druk i Wysyłka",
+                step4_desc: "Drukujemy i dostarczamy piękną pamiątkę pod Twoje drzwi.",
+                // Stories
+                stories_title: "...Lub Wybierz Klasyczną Przygodę",
+                stories_subtitle: "Każda z gotowych historii została stworzona przez utalentowanych autorów i ilustratorów.",
+                story1_title: "Wielka Kosmiczna Przygoda",
+                story1_desc: "Podróżuj przez gwiazdy i odkrywaj nowe planety ze swoim odważnym astronautą.",
+                story2_title: "Misja w Magicznym Lesie",
+                story2_desc: "Pomóż leśnym stworzeniom rozwiązać zagadkę w zaczarowanym lesie.",
+                story3_title: "Tajemnica Błękitnej Głębi",
+                story3_desc: "Zanurz się w oceanie, by spotkać przyjazne delfiny i odkryć skarb.",
+                story_button: "Spersonalizuj tę historię &rarr;",
+                // AI Generator
+                ai_title: "✨ Stwórz Wyjątkową Historię z AI",
+                ai_subtitle: "Nie możesz znaleźć idealnej przygody? Pozwól naszemu bajkopisarzowi AI stworzyć jedyną w swoim rodzaju opowieść dla kogoś wyjątkowego!",
+                form_name_label: "Imię głównego bohatera:",
+                form_name_placeholder: "np. Ania",
+                form_friend_label: "Imię przyjaciela lub zwierzaka:",
+                form_friend_placeholder: "np. wiewiórka Chrupek",
+                form_location_label: "Magiczne miejsce:",
+                form_location_placeholder: "np. Szepczący Las",
+                form_object_label: "Wyjątkowy przedmiot:",
+                form_object_placeholder: "np. błyszczący, śpiewający kwiatek",
+                form_theme_label: "O czym powinna być historia?",
+                form_theme_placeholder: "np. o tym, jak ważna jest życzliwość",
+                form_button: "✨ Wygeneruj Moją Historię",
+                loading_text: "Nasz magiczny bajkopisarz tworzy Twoją opowieść...",
+                error_fill_fields: "Proszę wypełnić wszystkie pola, aby stworzyć magiczną historię!",
+                error_generic: "Ups! Coś poszło nie tak. Proszę, spróbuj ponownie.",
+                error_safety: "Historia nie mogła zostać wygenerowana ze względu na nasze ustawienia bezpieczeństwa. Spróbuj dostosować swoje dane.",
+                // Pricing
+                pricing_title: "Bezcenny Prezent",
+                pricing_subtitle: "Wybierz idealny format dla swojej spersonalizowanej pamiątki.",
+                plan1_title: "Ebook Cyfrowy",
+                plan1_feature1: "Natychmiastowe pobieranie PDF",
+                plan1_feature2: "Czytaj na dowolnym urządzeniu",
+                plan1_feature3: "Idealny do dzielenia się",
+                popular_badge: "NAJPOPULARNIEJSZY",
+                plan2_title: "Miękka Oprawa",
+                plan2_feature1: "Żywy, wysokiej jakości druk",
+                plan2_feature2: "Trwała, pięknie wydrukowana okładka",
+                plan2_feature3: "Darmowa wysyłka standardowa",
+                plan3_title: "Twarda Oprawa",
+                plan3_feature1: "Pamiątka premium na lata",
+                plan3_feature2: "Błyszcząca, wytrzymała okładka",
+                plan3_feature3: "Darmowa wysyłka standardowa",
+                plan_button: "Wybierz Plan",
+                // CTA
+                cta_title: "Chcesz Stworzyć Historię?",
+                cta_subtitle: "Podaruj prezent, który rozbudza wyobraźnię i tworzy wspomnienia. Zacznij tworzyć książkę już dziś i zobacz uśmiech na ich twarzy.",
+                cta_button: "Stwórz Idealną Historię",
+                // Footer
+                footer_desc: "Splatamy wyobraźnię z rzeczywistością, jedna historia na raz.",
+                footer_links_title: "Szybkie Linki",
+                footer_link_home: "Strona Główna",
+                footer_link_how: "Jak to działa",
+                footer_link_stories: "Bajki",
+                footer_link_pricing: "Cennik",
+                footer_contact_title: "Kontakt",
+                footer_contact_email: "Email: witaj@storyweave.com",
+                footer_contact_phone: "Telefon: (+48) 123 456 789",
+                footer_copyright: "&copy; 2025 StoryWeave. Wszelkie prawa zastrzeżone.",
+                 // Gemini Prompts
+                gemini_system_prompt: "Jesteś światowej klasy autorem czarujących i podnoszących na duchu historii dla osób w każdym wieku. Twoje opowieści są magiczne, inspirujące i zawsze niosą łagodne, pozytywne przesłanie. Napisz krótką, znaczącą historię na podstawie danych od użytkownika.",
+                gemini_user_prompt: "Napisz magiczną historię o osobie o imieniu ${childName} i jej przyjacielu, ${friendName}. Przygoda rozgrywa się w ${location} i dotyczy specjalnego przedmiotu: ${specialObject}. Historia powinna być o ${theme}."
+            }
+        };
+
+        let currentLang = 'en';
+        const langToggleBtn = document.getElementById('lang-toggle');
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.dataset.translate;
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+                const key = el.dataset.translatePlaceholder;
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+            langToggleBtn.textContent = lang === 'en' ? 'PL' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            const newLang = currentLang === 'en' ? 'pl' : 'en';
+            setLanguage(newLang);
+        });
+
+        const generateStoryBtn = document.getElementById('generateStoryBtn');
+        const storyResultContainer = document.getElementById('storyResult');
+        const storyContent = document.getElementById('storyContent');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+
+        generateStoryBtn.addEventListener('click', generateStory);
+
+        function setUIState(isLoading, errorKey = null) {
+            loadingIndicator.classList.toggle('hidden', !isLoading);
+            generateStoryBtn.disabled = isLoading;
+            generateStoryBtn.classList.toggle('opacity-50', isLoading);
+            generateStoryBtn.classList.toggle('cursor-not-allowed', isLoading);
+            
+            if (errorKey) {
+                errorMessage.textContent = translations[currentLang][errorKey] || translations['en'][errorKey];
+                errorMessage.classList.remove('hidden');
+                storyContent.classList.add('hidden');
+            } else {
+                errorMessage.classList.add('hidden');
+            }
+
+            if (!isLoading && !errorKey) {
+                 storyContent.classList.remove('hidden');
+            }
+        }
+
+        async function generateStory() {
+            const childName = document.getElementById('childName').value.trim();
+            const friendName = document.getElementById('friendName').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const specialObject = document.getElementById('specialObject').value.trim();
+            const theme = document.getElementById('theme').value.trim();
+
+            if (!childName || !friendName || !location || !specialObject || !theme) {
+                storyResultContainer.classList.remove('hidden');
+                setUIState(false, 'error_fill_fields');
+                return;
+            }
+
+            storyResultContainer.classList.remove('hidden');
+            storyContent.innerHTML = '';
+            setUIState(true);
+
+            const systemPrompt = translations[currentLang].gemini_system_prompt;
+            const userQuery = translations[currentLang].gemini_user_prompt
+                .replace('${childName}', childName)
+                .replace('${friendName}', friendName)
+                .replace('${location}', location)
+                .replace('${specialObject}', specialObject)
+                .replace('${theme}', theme);
+
+
+            try {
+                const generatedText = await callGeminiWithBackoff(userQuery, systemPrompt);
+                
+                const formattedText = generatedText.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
+                storyContent.innerHTML = formattedText;
+                setUIState(false);
+
+            } catch (error) {
+                console.error('Error generating story:', error);
+                setUIState(false, error.message.includes('safety') ? 'error_safety' : 'error_generic');
+            }
+        }
+
+        async function callGeminiWithBackoff(userQuery, systemPrompt, retries = 3, delay = 1000) {
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        return candidate.content.parts[0].text;
+                    } else {
+                        const finishReason = candidate?.finishReason;
+                        if (finishReason === 'SAFETY') {
+                             throw new Error("The story could not be generated due to our safety settings. Please try adjusting your inputs.");
+                        }
+                        throw new Error('No content found in API response.');
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+                }
+            }
+        }
+
+        // Initialize the page with the default language
+        setLanguage(currentLang);
+    </script>
+
+</body>
+</html>
+
