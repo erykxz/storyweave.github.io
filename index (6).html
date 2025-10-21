@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoryWeave - Personalized Books for Your Loved Ones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        .font-brand { font-family: 'Pacifico', cursive; }
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in-up { animation: fadeInUp 1s ease-out forwards; opacity: 0; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .prose p { margin-bottom: 1em; }
+        
+        #storybookModal.hidden, #orderModal.hidden, #shippingFormModal.hidden { display: none; }
+        .storybook-nav-btn {
+            @apply bg-cyan-500 text-white font-bold py-2 px-6 rounded-full hover:bg-cyan-600 transition duration-300 shadow-md disabled:bg-slate-300 disabled:cursor-not-allowed;
+        }
+        .audio-btn {
+            @apply bg-amber-400 text-slate-900 font-bold p-3 rounded-full hover:bg-amber-500 transition duration-300 shadow-md flex items-center justify-center;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-brand text-cyan-600">StoryWeave</a>
+            <div class="flex items-center">
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#how-it-works" class="text-slate-600 hover:text-cyan-600 transition duration-300" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="#ai-story-generator" class="bg-cyan-500 text-white px-5 py-2 rounded-full hover:bg-cyan-600 transition duration-300 shadow-md" data-translate="nav_create_with_ai">✨ Create with AI</a>
+                </nav>
+                <button id="lang-toggle" class="ml-6 border border-slate-300 text-slate-600 font-semibold px-3 py-1 rounded-full text-sm hover:bg-slate-100 transition">PL</button>
+                <button class="md:hidden text-slate-600 ml-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-cyan-50 pt-32 pb-20 md:pt-40 md:pb-28">
+            <div class="container mx-auto px-6 text-center">
+                <h1 data-translate="hero_title" class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight fade-in-up">Your Loved One, The <span class="text-cyan-600">Hero</span> of Their Own Story</h1>
+                <p data-translate="hero_subtitle" class="mt-6 max-w-2xl mx-auto text-lg text-slate-600 fade-in-up" style="animation-delay: 0.2s;">Create one-of-a-kind, professionally printed storybooks where your loved one is the main character. A magical gift that lasts a lifetime.</p>
+                <a href="#ai-story-generator" data-translate="hero_button" class="mt-10 inline-block bg-amber-400 text-slate-900 font-bold px-8 py-4 rounded-full text-lg hover:bg-amber-500 transition duration-300 shadow-xl transform hover:scale-105 fade-in-up" style="animation-delay: 0.4s;">
+                    Start Creating with AI
+                </a>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20">
+             <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 data-translate="how_it_works_title" class="text-3xl md:text-4xl font-bold text-slate-900">Create Magic in 4 Simple Steps</h2>
+                    <p data-translate="how_it_works_subtitle" class="mt-4 text-slate-600 max-w-xl mx-auto">From screen to storytime in just a few clicks. It's that easy!</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300"><div class="bg-cyan-100 text-cyan-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.572L16.5 21.75l-.398-1.178a3.375 3.375 0 00-2.455-2.456L12.75 18l1.178-.398a3.375 3.375 0 002.455-2.456L16.5 14.25l.398 1.178a3.375 3.375 0 002.456 2.456L20.25 18l-1.178.398a3.375 3.375 0 00-2.456 2.456z" /></svg></div><h3 data-translate="step1_title" class="text-xl font-bold mb-2">1. Use the AI Writer</h3><p data-translate="step1_desc" class="text-slate-600">Provide a few details to our AI to generate a unique story.</p></div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300"><div class="bg-amber-100 text-amber-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div><h3 data-translate="step2_title" class="text-xl font-bold mb-2">2. Personalize</h3><p data-translate="step2_desc" class="text-slate-600">Add their name, create a character, and write a special dedication.</p></div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300"><div class="bg-violet-100 text-violet-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></div><h3 data-translate="step3_title" class="text-xl font-bold mb-2">3. Preview Instantly</h3><p data-translate="step3_desc" class="text-slate-600">See your complete, personalized book before you order.</p></div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300"><div class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.94 12.06a9 9 0 10-1.94 5.94"></path></svg></div><h3 data-translate="step4_title" class="text-xl font-bold mb-2">4. Print & Ship</h3><p data-translate="step4_desc" class="text-slate-600">We print and deliver a beautiful keepsake to your door.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Story Generator Section -->
+        <section id="ai-story-generator" class="py-20 bg-cyan-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 data-translate="ai_title" class="text-3xl md:text-4xl font-bold text-slate-900">✨ Create a Unique Story with AI</h2>
+                    <p data-translate="ai_subtitle" class="mt-4 text-slate-600 max-w-2xl mx-auto">Can't find the perfect adventure? Let our AI storyteller craft a one-of-a-kind tale for someone special!</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Standard fields -->
+                        <div>
+                            <label for="childName" class="font-semibold text-slate-700" data-translate="form_name_label">Main character's name:</label>
+                            <input type="text" id="childName" data-translate-placeholder="form_name_placeholder" placeholder="e.g., Lily" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="friendName" class="font-semibold text-slate-700" data-translate="form_friend_label">A friend or pet's name:</label>
+                            <input type="text" id="friendName" data-translate-placeholder="form_friend_placeholder" placeholder="e.g., Squeaky the squirrel" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="location" class="font-semibold text-slate-700" data-translate="form_location_label">A magical place:</label>
+                            <input type="text" id="location" data-translate-placeholder="form_location_placeholder" placeholder="e.g., The Whispering Woods" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="specialObject" class="font-semibold text-slate-700" data-translate="form_object_label">A special object:</label>
+                            <input type="text" id="specialObject" data-translate-placeholder="form_object_placeholder" placeholder="e.g., a glowing, singing flower" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="theme" class="font-semibold text-slate-700" data-translate="form_theme_label">What should the story be about?</label>
+                            <input type="text" id="theme" data-translate-placeholder="form_theme_placeholder" placeholder="e.g., the importance of kindness" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label for="characterImage" class="font-semibold text-slate-700" data-translate="form_upload_label">Add a photo to personalize illustrations (optional):</label>
+                            <input type="file" id="characterImage" accept="image/*" class="mt-2 w-full p-2 border border-slate-300 rounded-lg text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="pageCount" class="font-semibold text-slate-700" data-translate="form_pages_label">Number of pages (paragraphs):</label>
+                            <select id="pageCount" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition bg-white">
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10" selected>10</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-center mt-8">
+                        <button id="generateStoryBtn" data-translate="form_button" class="bg-amber-400 text-slate-900 font-bold px-8 py-4 rounded-full text-lg hover:bg-amber-500 transition duration-300 shadow-lg transform hover:scale-105">
+                            ✨ Generate My Story
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="storyResult" class="hidden mt-12 max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-lg border-2 border-dashed border-cyan-200">
+                    <div id="pageCountWarning" class="hidden text-sm text-amber-700 bg-amber-100 p-3 rounded-lg font-semibold text-center mb-6"></div>
+                    <div id="loadingIndicator" class="hidden text-center">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
+                        <p id="loading-text" data-translate="loading_text" class="mt-4 text-slate-600">Our magical storyteller is writing your tale...</p>
+                    </div>
+                    <div id="storyContent" class="text-slate-700 leading-relaxed prose lg:prose-xl"></div>
+                    
+                    <div id="illustrationSection" class="hidden mt-8 text-center border-t pt-8">
+                        <button id="illustrateStoryBtn" data-translate="illustrate_button" class="bg-cyan-500 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-cyan-600 transition duration-300 shadow-lg transform hover:scale-105">
+                            📖 Open Storybook
+                        </button>
+                        <div id="imageLoadingIndicator" class="hidden mt-4">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
+                            <p id="image-loading-text" data-translate="loading_image_text" class="mt-2 text-slate-600">The AI is painting your book...</p>
+                        </div>
+                        <div id="imageErrorMessage" class="hidden text-red-500 font-semibold text-center mt-4"></div>
+                    </div>
+                    
+                    <div id="errorMessage" class="hidden text-red-500 font-semibold text-center"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- STORYBOOK MODAL -->
+    <div id="storybookModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col p-6 relative">
+            <button id="closeStorybookBtn" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="flex-grow overflow-y-auto">
+                <img id="storybookImage" src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Illustration" class="w-full h-auto object-contain rounded-lg mb-4 border" alt="Storybook page illustration">
+                <p id="storybookText" class="text-lg text-slate-700 text-center px-4"></p>
+            </div>
+            
+            <div class="flex-shrink-0 flex justify-between items-center mt-4 pt-4 border-t">
+                <button id="prevPageBtn" class="storybook-nav-btn">Previous</button>
+                <div class="flex flex-col items-center">
+                    <button id="audioBtn" class="audio-btn" aria-label="Play audio narration">
+                        <svg id="playIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg id="pauseIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </button>
+                    <span id="pageCounter" class="text-slate-600 font-semibold mt-2">Page 1 / 1</span>
+                </div>
+                <button id="nextPageBtn" class="storybook-nav-btn">Next</button>
+            </div>
+            <div class="mt-4 pt-4 border-t text-center">
+                 <button id="orderBtn" data-translate="order_button" class="bg-emerald-500 text-white font-bold px-8 py-3 rounded-full text-lg hover:bg-emerald-600 transition duration-300 shadow-lg w-full">Order a professionally printed book</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SHIPPING FORM MODAL -->
+    <div id="shippingFormModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative">
+            <button id="closeShippingFormBtn" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 data-translate="shipping_form_title" class="text-2xl font-bold text-slate-800 mb-6 text-center">Shipping Details</h3>
+            <form id="shippingForm">
+                <div class="space-y-4">
+                    <div>
+                        <label for="fullName" class="font-semibold text-slate-700 text-sm" data-translate="shipping_form_fullname">Full Name</label>
+                        <input type="text" id="fullName" required class="mt-1 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                    </div>
+                    <div>
+                        <label for="address" class="font-semibold text-slate-700 text-sm" data-translate="shipping_form_address">Address</label>
+                        <input type="text" id="address" required class="mt-1 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                         <div>
+                            <label for="city" class="font-semibold text-slate-700 text-sm" data-translate="shipping_form_city">City</label>
+                            <input type="text" id="city" required class="mt-1 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label for="postalCode" class="font-semibold text-slate-700 text-sm" data-translate="shipping_form_postal">Postal Code</label>
+                            <input type="text" id="postalCode" required class="mt-1 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                        </div>
+                    </div>
+                     <div>
+                        <label for="email" class="font-semibold text-slate-700 text-sm" data-translate="shipping_form_email">Email or Phone Number</label>
+                        <input type="text" id="email" required class="mt-1 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <button type="submit" data-translate="shipping_form_submit" class="bg-emerald-500 text-white font-bold px-8 py-3 rounded-full text-lg hover:bg-emerald-600 transition duration-300 shadow-lg w-full">Confirm Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER CONFIRMATION MODAL -->
+    <div id="orderModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 text-center">
+            <h3 data-translate="order_confirm_title" class="text-2xl font-bold text-slate-800">Thank You!</h3>
+            <p data-translate="order_confirm_body" class="mt-4 text-slate-600">Your order has been received. This is a demo, so no payment will be processed. In a real application, you would be redirected to a payment page.</p>
+            <button id="closeOrderModalBtn" data-translate="order_confirm_close" class="mt-6 bg-cyan-500 text-white font-bold px-6 py-2 rounded-full hover:bg-cyan-600 transition duration-300">Close</button>
+        </div>
+    </div>
+
+    <footer class="bg-slate-800 text-slate-300">
+        <!-- Footer content... -->
+    </footer>
+
+    <audio id="audioPlayer" class="hidden"></audio>
+
+    <script>
+        const translations = {
+            en: {
+                nav_how_it_works: "How It Works",
+                nav_create_with_ai: "✨ Create with AI",
+                hero_title: 'Your Loved One, The <span class="text-cyan-600">Hero</span> of Their Own Story',
+                hero_subtitle: 'Create one-of-a-kind, professionally printed storybooks where your loved one is the main character. A magical gift that lasts a lifetime.',
+                hero_button: 'Start Creating with AI',
+                how_it_works_title: "Create Magic in 4 Simple Steps",
+                how_it_works_subtitle: "From screen to storytime in just a few clicks. It's that easy!",
+                step1_title: "1. Use the AI Writer",
+                step1_desc: "Provide a few details to our AI to generate a unique story.",
+                step2_title: "2. Personalize",
+                step2_desc: "Add their name, create a character, and write a special dedication.",
+                step3_title: "3. Preview Instantly",
+                step3_desc: "See your complete, personalized book before you order.",
+                step4_title: "4. Print & Ship",
+                step4_desc: "We print and deliver a beautiful keepsake to your door.",
+                ai_title: "✨ Create a Unique Story with AI",
+                ai_subtitle: "Can't find the perfect adventure? Let our AI storyteller craft a one-of-a-kind tale for someone special!",
+                form_name_label: "Main character's name:",
+                form_name_placeholder: "e.g., Lily",
+                form_friend_label: "A friend or pet's name:",
+                form_friend_placeholder: "e.g., Squeaky the squirrel",
+                form_location_label: "A magical place:",
+                form_location_placeholder: "e.g., The Whispering Woods",
+                form_object_label: "A special object:",
+                form_object_placeholder: "e.g., a glowing, singing flower",
+                form_theme_label: "What should the story be about?",
+                form_theme_placeholder: "e.g., the importance of kindness",
+                form_button: "✨ Generate My Story",
+                loading_text: "Our magical storyteller is writing your tale...",
+                error_fill_fields: "Please fill out all fields to create a magical story!",
+                error_generic: "Oops! Something went wrong. Please try again.",
+                error_safety: "The story could not be generated due to our safety settings. Please try adjusting your inputs.",
+                form_pages_label: "Number of pages (each paragraph is a page):",
+                warning_page_count_mismatch: "Note: The AI generated a story with ${actualCount} pages, although ${requestedCount} were requested.",
+                form_upload_label: "Add a photo to personalize illustrations (optional):",
+                illustrate_button: "📖 Open Storybook",
+                loading_image_text: "The AI is creating your book (text, images, & audio)...",
+                loading_image_page_text: "Creating page ${currentPage} of ${totalPages}...",
+                error_image_generic: "Sorry, the illustration or audio could not be created. Please try again.",
+                storybook_prev: "Previous",
+                storybook_next: "Next",
+                storybook_page: "Page",
+                order_button: "Order a professionally printed book",
+                shipping_form_title: "Shipping Details",
+                shipping_form_fullname: "Full Name",
+                shipping_form_address: "Address",
+                shipping_form_city: "City",
+                shipping_form_postal: "Postal Code",
+                shipping_form_email: "Email or Phone Number",
+                shipping_form_submit: "Confirm Order",
+                order_confirm_title: "Thank You!",
+                order_confirm_body: "Your order has been received. This is a demo, so no payment will be processed. In a real application, you would be redirected to a payment page.",
+                order_confirm_close: "Close",
+                image_to_image_prompt: "Redraw the character from the provided image in a beautiful, whimsical, colorful storybook style, maintaining their key features. Place them in this scene: ${text}",
+                gemini_system_prompt: "You are a world-class author of enchanting and heartwarming stories. Your stories are magical, uplifting, and always carry a gentle, positive message. Write a short, meaningful story based on the user's input.",
+                gemini_user_prompt: "Write a magical story, divided into exactly ${pageCount} short paragraphs. Each paragraph MUST be separated by a new line. Each paragraph will be one page. The story is about a person named ${childName} and their friend, ${friendName}. The adventure takes place in ${location} and involves a special object: ${specialObject}. The story's theme is about ${theme}."
+            },
+            pl: {
+                nav_how_it_works: "Jak to działa",
+                nav_create_with_ai: "✨ Stwórz z AI",
+                hero_title: 'Zostań <span class="text-cyan-600">Bohaterem</span> Niezwykłej Opowieści',
+                hero_subtitle: 'Twórz jedyne w swoim rodzaju opowiadania.',
+                hero_button: 'Zacznij Tworzyć z nami',
+                how_it_works_title: "Stwórz Magię w 4 Prostych Krokach",
+                how_it_works_subtitle: "Od ekranu do wspólnie spędzonych chwil w kilka kliknięć. To takie proste!",
+                step1_title: "1. Użyj Kreatora AI",
+                step1_desc: "Podaj kilka szczegółów, a nasza sztuczna inteligencja wygeneruje unikalną historię.",
+                step2_title: "2. Spersonalizuj",
+                step2_desc: "Dodaj imię bohatera, stwórz jego postać i napisz specjalną dedykację.",
+                step3_title: "3. Zobacz Podgląd",
+                step3_desc: "Zobacz całą, spersonalizowaną książkę, zanim złożysz zamówienie.",
+                step4_title: "4. Druk i Wysyłka",
+                step4_desc: "Drukujemy i dostarczamy piękną pamiątkę prosto pod Twoje drzwi.",
+                ai_title: "✨ Stwórz Wyjątkową Historię z AI",
+                ai_subtitle: "Nie możesz znaleźć idealnej przygody? Pozwól naszemu kreatorowi AI stworzyć jedyną w swoim rodzaju opowieść dla kogoś wyjątkowego!",
+                form_name_label: "Imię głównego bohatera:",
+                form_name_placeholder: "np. Ania",
+                form_friend_label: "Imię przyjaciela lub zwierzaka:",
+                form_friend_placeholder: "np. piesek Łatek",
+                form_location_label: "Magiczne miejsce:",
+                form_location_placeholder: "np. Tęczowa Dolina",
+                form_object_label: "Wyjątkowy przedmiot:",
+                form_object_placeholder: "np. mapa prowadząca do skarbu",
+                form_theme_label: "O czym powinna być historia?",
+                form_theme_placeholder: "np. o sile prawdziwej przyjaźni",
+                form_button: "✨ Wygeneruj Moją Historię",
+                loading_text: "Nasz kreator AI tworzy Twoją opowieść...",
+                error_fill_fields: "Proszę wypełnić wszystkie pola, aby stworzyć magiczną historię!",
+                error_generic: "Ups! Coś poszło nie tak. Spróbuj ponownie.",
+                error_safety: "Historia nie mogła zostać wygenerowana ze względu na nasze ustawienia bezpieczeństwa. Spróbuj dostosować swoje dane wejściowe.",
+                form_pages_label: "Liczba stron (każdy akapit to jedna strona):",
+                warning_page_count_mismatch: "Uwaga: AI wygenerowała historię o długości ${actualCount} stron, chociaż poproszono o ${requestedCount}.",
+                form_upload_label: "Dodaj zdjęcie do personalizacji ilustracji (opcjonalnie):",
+                illustrate_button: "📖 Otwórz Książeczkę",
+                loading_image_text: "AI tworzy Twoją książeczkę (ilustracje i narrację)...",
+                loading_image_page_text: "Tworzenie strony ${currentPage} z ${totalPages}...",
+                error_image_generic: "Niestety, nie udało się stworzyć ilustracji lub narracji. Spróbuj ponownie.",
+                storybook_prev: "Poprzednia",
+                storybook_next: "Następna",
+                storybook_page: "Strona",
+                order_button: "Zamów profesjonalnie wydrukowaną książeczkę",
+                shipping_form_title: "Dane do wysyłki",
+                shipping_form_fullname: "Imię i nazwisko",
+                shipping_form_address: "Adres",
+                shipping_form_city: "Miasto",
+                shipping_form_postal: "Kod pocztowy",
+                shipping_form_email: "Email lub numer telefonu",
+                shipping_form_submit: "Potwierdź zamówienie",
+                order_confirm_title: "Dziękujemy!",
+                order_confirm_body: "Twoje zamówienie zostało przyjęte. To jest wersja demonstracyjna, więc płatność nie zostanie przetworzona. W prawdziwej aplikacji nastąpiłoby przekierowanie do systemu płatności.",
+                order_confirm_close: "Zamknij",
+                image_to_image_prompt: "Przerysuj postać z załączonego zdjęcia w pięknym, bajkowym, kolorowym stylu książki dla dzieci, zachowując jej kluczowe cechy. Umieść ją w tej scenie: ${text}",
+                gemini_system_prompt: "Jesteś światowej klasy autorem czarujących i podnoszących na duchu historii dla osób w każdym wieku. Twoje opowieści są magiczne, inspirujące i zawsze niosą łagodne, pozytywne przesłanie. Napisz krótką, znaczącą historię na podstawie danych od użytkownika.",
+                gemini_user_prompt: "Napisz magiczną historię, podzieloną na dokładnie ${pageCount} krótkich akapitów. Każdy akapit MUSI być oddzielony nową linią. Każdy akapit będzie osobną stroną książki. Historia opowiada o osobie o imieniu ${childName} i jej przyjacielu, ${friendName}. Przygoda rozgrywa się w ${location} i dotyczy specjalnego przedmiotu: ${specialObject}. Motywem przewodnim opowieści jest ${theme}."
+            }
+        };
+
+        let currentLang = 'en';
+        
+        // --- DOM Elements ---
+        const characterImageInput = document.getElementById('characterImage');
+        const orderBtn = document.getElementById('orderBtn');
+        const orderModal = document.getElementById('orderModal');
+        const closeOrderModalBtn = document.getElementById('closeOrderModalBtn');
+        const shippingFormModal = document.getElementById('shippingFormModal');
+        const closeShippingFormBtn = document.getElementById('closeShippingFormBtn');
+        const shippingForm = document.getElementById('shippingForm');
+        // (other DOM elements are here)
+        const generateStoryBtn = document.getElementById('generateStoryBtn'), storyResultContainer = document.getElementById('storyResult'), storyContent = document.getElementById('storyContent'), loadingIndicator = document.getElementById('loadingIndicator'), errorMessage = document.getElementById('errorMessage'), illustrationSection = document.getElementById('illustrationSection'), illustrateStoryBtn = document.getElementById('illustrateStoryBtn'), imageLoadingIndicator = document.getElementById('imageLoadingIndicator'), imageLoadingText = document.getElementById('image-loading-text'), imageErrorMessage = document.getElementById('imageErrorMessage'), storybookModal = document.getElementById('storybookModal'), closeStorybookBtn = document.getElementById('closeStorybookBtn'), storybookImage = document.getElementById('storybookImage'), storybookText = document.getElementById('storybookText'), prevPageBtn = document.getElementById('prevPageBtn'), nextPageBtn = document.getElementById('nextPageBtn'), pageCounter = document.getElementById('pageCounter'), langToggleBtn = document.getElementById('lang-toggle'), audioBtn = document.getElementById('audioBtn'), playIcon = document.getElementById('playIcon'), pauseIcon = document.getElementById('pauseIcon'), audioPlayer = document.getElementById('audioPlayer'), pageCountWarning = document.getElementById('pageCountWarning');
+
+        // --- State Variables ---
+        let storybookPages = [];
+        let currentPageIndex = 0;
+        let uploadedImageBase64 = null;
+
+        // --- Functions ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                uploadedImageBase64 = null;
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => {
+                const result = reader.result;
+                // Simple validation for base64 format
+                if (typeof result === 'string' && result.startsWith('data:image')) {
+                    uploadedImageBase64 = result;
+                } else {
+                    uploadedImageBase64 = null;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function generateAndOpenStorybook() {
+            const paragraphs = storyContent.innerText.split('\n').filter(p => p.trim() !== '');
+            if (paragraphs.length === 0) return;
+            setImageUIState(true);
+            storybookPages = [];
+            try {
+                for (let i = 0; i < paragraphs.length; i++) {
+                    const progressTemplate = translations[currentLang].loading_image_page_text;
+                    const progressText = progressTemplate.replace('${currentPage}', i + 1).replace('${totalPages}', paragraphs.length);
+                    setImageUIState(true, null, progressText);
+                    const text = paragraphs[i];
+                    
+                    const audioPrompt = `Read in a warm, gentle storytelling voice: ${text}`;
+                    
+                    let imagePromise;
+                    if (i === 0 && uploadedImageBase64) {
+                        const imagePrompt = translations[currentLang].image_to_image_prompt.replace('${text}', text);
+                        imagePromise = callImageToImageApi(imagePrompt, uploadedImageBase64).then(base64 => `data:image/png;base64,${base64}`);
+                    } else {
+                        const imagePrompt = `A beautiful, whimsical, colorful illustration for a storybook page, in a gentle cartoon style. The scene is about: ${text}`;
+                        imagePromise = callImagenApi(imagePrompt).then(base64 => `data:image/png;base64,${base64}`);
+                    }
+                    
+                    const audioPromise = callTtsApi(audioPrompt).then(blob => URL.createObjectURL(blob));
+
+                    const [imageUrl, audioUrl] = await Promise.all([imagePromise, audioPromise]);
+                    storybookPages.push({ text, imageUrl, audioUrl });
+                }
+                setImageUIState(false);
+                openStorybook();
+            } catch (error) {
+                console.error('Error generating storybook:', error);
+                setImageUIState(false, 'error_image_generic');
+            }
+        }
+        
+        // (Other functions: setLanguage, setUIState, generateStory, modals, audio, etc. are here, mostly unchanged)
+        // --- Event Listeners & Initializers ---
+        characterImageInput.addEventListener('change', handleImageUpload);
+        orderBtn.addEventListener('click', () => {
+            closeStorybook();
+            shippingFormModal.classList.remove('hidden');
+        });
+        closeOrderModalBtn.addEventListener('click', () => orderModal.classList.add('hidden'));
+        closeShippingFormBtn.addEventListener('click', () => shippingFormModal.classList.add('hidden'));
+        shippingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            shippingFormModal.classList.add('hidden');
+            orderModal.classList.remove('hidden');
+        });
+
+        // (All other listeners and initializers)
+        function setLanguage(lang) { currentLang = lang; document.documentElement.lang = lang; document.querySelectorAll('[data-translate]').forEach(el => { const key = el.dataset.translate; if (translations[lang] && translations[lang][key]) { el.innerHTML = translations[lang][key]; }}); document.querySelectorAll('[data-translate-placeholder]').forEach(el => { const key = el.dataset.translatePlaceholder; if (translations[lang] && translations[lang][key]) { el.placeholder = translations[lang][key]; }}); langToggleBtn.textContent = lang === 'en' ? 'PL' : 'EN'; }
+        function setUIState(isLoading, errorKey = null) { loadingIndicator.classList.toggle('hidden', !isLoading); generateStoryBtn.disabled = isLoading; generateStoryBtn.classList.toggle('opacity-50', isLoading); generateStoryBtn.classList.toggle('cursor-not-allowed', isLoading); if (errorKey) { errorMessage.textContent = translations[currentLang][errorKey] || translations['en'][errorKey]; errorMessage.classList.remove('hidden'); storyContent.classList.add('hidden'); } else { errorMessage.classList.add('hidden'); } if (!isLoading && !errorKey) { storyContent.classList.remove('hidden'); } }
+        function setImageUIState(isLoading, errorKey = null, progressText = null) { imageLoadingIndicator.classList.toggle('hidden', !isLoading); illustrateStoryBtn.disabled = isLoading; illustrateStoryBtn.classList.toggle('opacity-50', isLoading); illustrateStoryBtn.classList.toggle('cursor-not-allowed', isLoading); if (progressText) { imageLoadingText.textContent = progressText; } else { imageLoadingText.textContent = translations[currentLang].loading_image_text; } if(errorKey) { imageErrorMessage.textContent = translations[currentLang][errorKey] || translations['en'][errorKey]; imageErrorMessage.classList.remove('hidden'); } else { imageErrorMessage.classList.add('hidden'); } }
+        async function generateStory() { const childName = document.getElementById('childName').value.trim(); const friendName = document.getElementById('friendName').value.trim(); const location = document.getElementById('location').value.trim(); const specialObject = document.getElementById('specialObject').value.trim(); const theme = document.getElementById('theme').value.trim(); const pageCount = document.getElementById('pageCount').value; if (!childName || !friendName || !location || !specialObject || !theme) { storyResultContainer.classList.remove('hidden'); setUIState(false, 'error_fill_fields'); return; } storyResultContainer.classList.remove('hidden'); storyContent.innerHTML = ''; illustrationSection.classList.add('hidden'); pageCountWarning.classList.add('hidden'); setUIState(true); const systemPrompt = translations[currentLang].gemini_system_prompt; const userQuery = translations[currentLang].gemini_user_prompt.replace('${childName}', childName).replace('${friendName}', friendName).replace('${location}', location).replace('${specialObject}', specialObject).replace('${theme}', theme).replace('${pageCount}', pageCount); try { const generatedText = await callGeminiWithBackoff(userQuery, systemPrompt); const paragraphs = generatedText.split('\n').filter(p => p.trim() !== ''); const actualPageCount = paragraphs.length; if (actualPageCount != pageCount) { const warningTemplate = translations[currentLang].warning_page_count_mismatch; const warningText = warningTemplate.replace('${actualCount}', actualPageCount).replace('${requestedCount}', pageCount); pageCountWarning.textContent = warningText; pageCountWarning.classList.remove('hidden'); } const formattedText = paragraphs.map(p => `<p>${p}</p>`).join(''); storyContent.innerHTML = formattedText; illustrationSection.classList.remove('hidden'); setUIState(false); } catch (error) { console.error('Error generating story:', error); setUIState(false, error.message.includes('safety') ? 'error_safety' : 'error_generic'); } }
+        function openStorybook() { currentPageIndex = 0; displayStorybookPage(currentPageIndex, false); storybookModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+        function closeStorybook() { audioPlayer.pause(); storybookModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
+        function showPrevPage() { if (currentPageIndex > 0) { currentPageIndex--; displayStorybookPage(currentPageIndex, false); } }
+        function showNextPage(autoplay = false) { if (currentPageIndex < storybookPages.length - 1) { currentPageIndex++; displayStorybookPage(currentPageIndex, autoplay); } }
+        function displayStorybookPage(index, autoplay = false) { audioPlayer.pause(); playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); const page = storybookPages[index]; storybookImage.src = page.imageUrl; storybookText.textContent = page.text; audioPlayer.src = page.audioUrl; if (autoplay) { audioPlayer.play(); } const pageText = translations[currentLang].storybook_page || "Page"; pageCounter.textContent = `${pageText} ${index + 1} / ${storybookPages.length}`; prevPageBtn.textContent = translations[currentLang].storybook_prev || "Previous"; nextPageBtn.textContent = translations[currentLang].storybook_next || "Next"; prevPageBtn.disabled = index === 0; nextPageBtn.disabled = index === storybookPages.length - 1; }
+        function base64ToArrayBuffer(base64) { const binaryString = window.atob(base64); const len = binaryString.length; const bytes = new Uint8Array(len); for (let i = 0; i < len; i++) { bytes[i] = binaryString.charCodeAt(i); } return bytes.buffer; }
+        function pcmToWav(pcmData, sampleRate) { const numChannels = 1; const bitsPerSample = 16; const blockAlign = numChannels * bitsPerSample / 8; const byteRate = sampleRate * blockAlign; const dataSize = pcmData.length * pcmData.BYTES_PER_ELEMENT; const buffer = new ArrayBuffer(44 + dataSize); const view = new DataView(buffer); function writeString(view, offset, string) { for (let i = 0; i < string.length; i++) { view.setUint8(offset + i, string.charCodeAt(i)); } } writeString(view, 0, 'RIFF'); view.setUint32(4, 36 + dataSize, true); writeString(view, 8, 'WAVE'); writeString(view, 12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, numChannels, true); view.setUint32(24, sampleRate, true); view.setUint32(28, byteRate, true); view.setUint16(32, blockAlign, true); view.setUint16(34, bitsPerSample, true); writeString(view, 36, 'data'); view.setUint32(40, dataSize, true); new Int16Array(buffer, 44).set(new Int16Array(pcmData.buffer)); return new Blob([view], { type: 'audio/wav' }); }
+        async function callGeminiWithBackoff(userQuery, systemPrompt, retries = 3, delay = 1000) { const apiKey = "AIzaSyCAkPvO-oefn7Dp-FMxwAXYxW3ebhg2gRI"; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`; const payload = { contents: [{ parts: [{ text: userQuery }] }], systemInstruction: { parts: [{ text: systemPrompt }] }, }; for (let i = 0; i < retries; i++) { try { const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); const result = await response.json(); const candidate = result.candidates?.[0]; if (candidate?.content?.parts?.[0]?.text) { return candidate.content.parts[0].text; } else { if (candidate?.finishReason === 'SAFETY') { throw new Error("safety"); } throw new Error('No content found in API response.'); } } catch (error) { console.error(`Attempt ${i + 1} failed:`, error); if (i === retries - 1) throw error; await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i))); } } }
+        async function callImagenApi(prompt, retries = 3, delay = 1000) { const apiKey = "AIzaSyCAkPvO-oefn7Dp-FMxwAXYxW3ebhg2gRI"; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`; const payload = { instances: [{ "prompt": prompt }], parameters: { "sampleCount": 1 } }; for (let i = 0; i < retries; i++) { try { const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); const result = await response.json(); if (result.predictions?.[0]?.bytesBase64Encoded) { return result.predictions[0].bytesBase64Encoded; } else { throw new Error('No image data found in API response.'); } } catch (error) { console.error(`Image generation attempt ${i + 1} failed:`, error); if (i === retries - 1) throw error; await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i))); } } }
+        async function callTtsApi(prompt, retries = 3, delay = 1000) { const apiKey = "AIzaSyCAkPvO-oefn7Dp-FMxwAXYxW3ebhg2gRI"; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`; const payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } } }, model: "gemini-2.5-flash-preview-tts" }; for (let i = 0; i < retries; i++) { try { const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); const result = await response.json(); const part = result?.candidates?.[0]?.content?.parts?.[0]; const audioData = part?.inlineData?.data; const mimeType = part?.inlineData?.mimeType; if (audioData && mimeType && mimeType.startsWith("audio/")) { const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10); const pcmData = base64ToArrayBuffer(audioData); return pcmToWav(new Int16Array(pcmData), sampleRate); } else { throw new Error('Invalid audio data in response.'); } } catch (error) { console.error(`TTS attempt ${i + 1} failed:`, error); if (i === retries - 1) throw error; await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i))); } } }
+        async function callImageToImageApi(prompt, base64ImageData) { const apiKey = "AIzaSyCAkPvO-oefn7Dp-FMxwAXYxW3ebhg2gRI"; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`; const [mimeType, base64Data] = base64ImageData.split(';base64,'); const payload = { contents: [{ parts: [ { text: prompt }, { inlineData: { mimeType: mimeType.replace('data:', ''), data: base64Data } } ] }], generationConfig: { responseModalities: ['IMAGE'] } }; const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); const result = await response.json(); const imageData = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data; if (!imageData) throw new Error('No image data found in image-to-image API response.'); return imageData; }
+        generateStoryBtn.addEventListener('click', generateStory);
+        illustrateStoryBtn.addEventListener('click', generateAndOpenStorybook);
+        closeStorybookBtn.addEventListener('click', closeStorybook);
+        prevPageBtn.addEventListener('click', () => showPrevPage());
+        nextPageBtn.addEventListener('click', () => showNextPage(false));
+        langToggleBtn.addEventListener('click', () => { const newLang = currentLang === 'en' ? 'pl' : 'en'; setLanguage(newLang); });
+        audioBtn.addEventListener('click', () => { if (audioPlayer.paused) { audioPlayer.play(); } else { audioPlayer.pause(); } });
+        audioPlayer.onplay = () => { playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); };
+        audioPlayer.onpause = () => { playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); };
+        audioPlayer.onended = () => { playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); if (currentPageIndex < storybookPages.length - 1) { showNextPage(true); } };
+        setLanguage('en');
+
+    </script>
+
+</body>
+</html>
+
